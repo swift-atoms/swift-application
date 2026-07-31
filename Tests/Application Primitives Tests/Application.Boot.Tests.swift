@@ -9,10 +9,9 @@
 //
 // ===----------------------------------------------------------------------===//
 
+import Application_Primitives
 import Synchronization
 import Testing
-
-import Application_Primitives
 
 extension Application.Boot {
     @Suite("Application.Boot")

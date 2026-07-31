@@ -9,9 +9,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
-
 import Application_Primitives
+import Testing
 
 // `Application.Resolution` is generic; see the note on `Root Tests` for why the
 // suite is not an extension of the source type.

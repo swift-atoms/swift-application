@@ -9,9 +9,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
-
 import Application_Primitives
+import Testing
 
 // `Application.Root` is generic, so its suite cannot be an extension of the source
 // type: unspecialized, `@Suite` is a hard error in a generic context; specialized,

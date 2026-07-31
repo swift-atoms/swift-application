@@ -9,9 +9,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
-
 import Application_Primitives
+import Testing
 
 extension Application.Boundary {
     @Suite("Application.Boundary")
