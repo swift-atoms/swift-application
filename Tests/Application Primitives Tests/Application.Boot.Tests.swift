@@ -13,6 +13,16 @@ import Application_Primitives
 import Synchronization
 import Testing
 
+extension Application.Boot.Test.Tally {
+    func increment() {
+        count.withLock { $0 += 1 }
+    }
+
+    var total: Int {
+        count.withLock { $0 }
+    }
+}
+
 extension Application.Boot {
     @Suite("Application.Boot")
     struct Test {
@@ -39,14 +49,6 @@ extension Application.Boot {
         /// a `Sendable` type.
         final class Tally: Sendable {
             let count = Mutex(0)
-
-            func increment() {
-                count.withLock { $0 += 1 }
-            }
-
-            var total: Int {
-                count.withLock { $0 }
-            }
         }
 
         @Suite struct Unit {
@@ -131,7 +133,9 @@ extension Application.Boot {
                     }
                 )
 
-                _ = try? plan()
+                do throws(Application.Boot.Test.Failure) {
+                    _ = try plan()
+                } catch {}
 
                 // Phase two never runs when phase one fails, so no half-composed
                 // root can escape.
