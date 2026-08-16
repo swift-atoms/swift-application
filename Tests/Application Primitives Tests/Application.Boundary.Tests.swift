@@ -72,7 +72,9 @@ extension Application.Boundary {
                 )
 
                 #expect(Application.Boundary.allCases.count == 5)
-                #expect(table.boundaries(.inherited).count + table.boundaries(.reapplied).count == 5)
+                #expect(
+                    table.boundaries(.inherited).count + table.boundaries(.reapplied).count == 5
+                )
             }
 
             @Test func `a table assigning every boundary the same way has one partition`() {
