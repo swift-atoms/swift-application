@@ -18,7 +18,11 @@ import Testing
 struct `Resolution Tests` {
     @Suite struct Unit {
         @Test func `a resolution records the boundary and disposition it was obtained under`() {
-            let resolution = Application.Resolution(boundary: .job, disposition: .reapplied, value: 7)
+            let resolution = Application.Resolution(
+                boundary: .job,
+                disposition: .reapplied,
+                value: 7
+            )
 
             #expect(resolution.boundary == .job)
             #expect(resolution.disposition == .reapplied)
@@ -26,15 +30,27 @@ struct `Resolution Tests` {
         }
 
         @Test func `resolutions of one root agree across boundaries and dispositions`() {
-            let inherited = Application.Resolution(boundary: .request, disposition: .inherited, value: 7)
-            let reapplied = Application.Resolution(boundary: .job, disposition: .reapplied, value: 7)
+            let inherited = Application.Resolution(
+                boundary: .request,
+                disposition: .inherited,
+                value: 7
+            )
+            let reapplied = Application.Resolution(
+                boundary: .job,
+                disposition: .reapplied,
+                value: 7
+            )
 
             #expect(inherited.agrees(with: reapplied))
         }
 
         @Test func `resolutions carrying different roots do not agree`() {
             let one = Application.Resolution(boundary: .request, disposition: .inherited, value: 7)
-            let other = Application.Resolution(boundary: .request, disposition: .inherited, value: 8)
+            let other = Application.Resolution(
+                boundary: .request,
+                disposition: .inherited,
+                value: 8
+            )
 
             // The failing direction is the one that matters: it is how a runtime
             // that re-applied something other than the registered root shows up.
@@ -44,15 +60,27 @@ struct `Resolution Tests` {
 
     @Suite struct `Edge Case` {
         @Test func `agreement is about the value and equality is about the whole record`() {
-            let inherited = Application.Resolution(boundary: .request, disposition: .inherited, value: 7)
-            let reapplied = Application.Resolution(boundary: .job, disposition: .reapplied, value: 7)
+            let inherited = Application.Resolution(
+                boundary: .request,
+                disposition: .inherited,
+                value: 7
+            )
+            let reapplied = Application.Resolution(
+                boundary: .job,
+                disposition: .reapplied,
+                value: 7
+            )
 
             #expect(inherited.agrees(with: reapplied))
             #expect(inherited != reapplied)
         }
 
         @Test func `a resolution agrees with itself`() {
-            let resolution = Application.Resolution(boundary: .shutdown, disposition: .inherited, value: 7)
+            let resolution = Application.Resolution(
+                boundary: .shutdown,
+                disposition: .inherited,
+                value: 7
+            )
 
             #expect(resolution.agrees(with: resolution))
         }

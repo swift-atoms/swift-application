@@ -103,7 +103,8 @@ extension Application.Boot {
                     // `throws(Failure)` from context, so the thrown type is written
                     // out; left to inference the closure throws `any Error`.
                     construct: {
-                        () throws(Application.Boot.Test.Failure) -> Application.Boot.Test.Resource in
+                        () throws(Application.Boot.Test.Failure)
+                            -> Application.Boot.Test.Resource in
                         throw Application.Boot.Test.Failure.unavailable
                     },
                     compose: { Application.Boot.Test.Composed(label: $0.label) }
@@ -124,7 +125,8 @@ extension Application.Boot {
                     Application.Boot.Test.Failure
                 >(
                     construct: {
-                        () throws(Application.Boot.Test.Failure) -> Application.Boot.Test.Resource in
+                        () throws(Application.Boot.Test.Failure)
+                            -> Application.Boot.Test.Resource in
                         throw Application.Boot.Test.Failure.unavailable
                     },
                     compose: {
