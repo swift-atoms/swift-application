@@ -1,22 +1,6 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-application-primitives open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-application-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Application_Primitives
 import Testing
 
-// `Application.Root` is generic, so its suite cannot be an extension of the source
-// type: unspecialized, `@Suite` is a hard error in a generic context; specialized,
-// the suite compiles and is silently never discovered.
-// A backticked suite name is already the display name, so `@Suite` must not also
-// be given one.
 @Suite
 struct `Root Tests` {
     @Suite struct Unit {
@@ -72,7 +56,6 @@ struct `Root Tests` {
             var root = Application.Root<Int?>.unset
             try root.register(nil)
 
-            // Registering `nil` is a completed registration, not an absent one.
             #expect(root.isRegistered)
             let resolved = try root.resolve()
             #expect(resolved == nil)
@@ -82,8 +65,6 @@ struct `Root Tests` {
             var root = Application.Root<Int>.unset
             try root.register(7)
 
-            // Set-once is about the event, not the value: an idempotent-looking
-            // second registration is still a defect in the boot sequence.
             #expect(throws: Application.Root<Int>.Error.alreadyRegistered) {
                 try root.register(7)
             }
@@ -97,8 +78,6 @@ struct `Root Tests` {
             table[.job] = .reapplied
             table[.task] = .reapplied
 
-            // The per-boundary re-application invariant: disposition varies, the
-            // resolved root does not.
             for boundary in Application.Boundary.allCases {
                 let resolution = try root.resolve(at: boundary, using: table)
 

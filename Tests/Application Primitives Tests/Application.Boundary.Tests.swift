@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-application-primitives open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-application-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Application_Primitives
 import Testing
 
@@ -59,10 +48,7 @@ extension Application.Boundary {
 
         @Suite struct `Edge Case` {
             @Test func `a table is total over the boundary vocabulary`() {
-                // Totality is the reason the table is stored rather than mapped:
-                // reading it can never miss a boundary, so no boundary can silently
-                // go unhandled. This test fails by construction the moment a case is
-                // added to `Application.Boundary` without a stored counterpart.
+
                 let table = Application.Boundary.Table(
                     request: .inherited,
                     scene: .inherited,

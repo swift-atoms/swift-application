@@ -1,19 +1,6 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-application-primitives open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-application-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Application_Primitives
 import Testing
 
-// `Application.Resolution` is generic; see the note on `Root Tests` for why the
-// suite is not an extension of the source type.
 @Suite
 struct `Resolution Tests` {
     @Suite struct Unit {
@@ -52,8 +39,6 @@ struct `Resolution Tests` {
                 value: 8
             )
 
-            // The failing direction is the one that matters: it is how a runtime
-            // that re-applied something other than the registered root shows up.
             #expect(!one.agrees(with: other))
         }
     }

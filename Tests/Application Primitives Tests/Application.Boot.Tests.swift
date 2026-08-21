@@ -1,14 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-application-primitives open source project
-//
-// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-application-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Application_Primitives
 import Synchronization
 import Testing
@@ -26,27 +15,19 @@ extension Application.Boot.Test.Tally {
 extension Application.Boot {
     @Suite("Application.Boot")
     struct Test {
-        /// A process resource whose construction is observable.
+
         struct Resource: Sendable, Equatable {
             var label: String
         }
 
-        /// A composition root assembled from ``Resource``.
         struct Composed: Sendable, Equatable {
             var label: String
         }
 
-        /// A construction failure, so a failing plan has a domain error to raise.
         enum Failure: Swift.Error, Equatable {
             case unavailable
         }
 
-        /// Counts phase invocations from inside a plan's escaping closures.
-        ///
-        /// `Mutex` is `~Copyable` and so cannot itself be captured by an escaping
-        /// closure; a final class holding one can be, and stays `Sendable` without
-        /// an unchecked conformance because its only stored property is a `let` of
-        /// a `Sendable` type.
         final class Tally: Sendable {
             let count = Mutex(0)
         }
@@ -99,9 +80,7 @@ extension Application.Boot {
                     Application.Boot.Test.Composed,
                     Application.Boot.Test.Failure
                 >(
-                    // A closure literal does not pick up the stored property's
-                    // `throws(Failure)` from context, so the thrown type is written
-                    // out; left to inference the closure throws `any Error`.
+
                     construct: {
                         () throws(Application.Boot.Test.Failure)
                             -> Application.Boot.Test.Resource in
@@ -139,8 +118,6 @@ extension Application.Boot {
                     _ = try plan()
                 } catch {}
 
-                // Phase two never runs when phase one fails, so no half-composed
-                // root can escape.
                 #expect(tally.total == 0)
             }
 
@@ -161,8 +138,6 @@ extension Application.Boot {
                 _ = plan()
                 _ = plan()
 
-                // A plan is a description, not a memo: running it once is the
-                // runtime's job, and the set-once root is what enforces that.
                 #expect(tally.total == 2)
             }
         }
