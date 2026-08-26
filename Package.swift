@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-application-primitives",
+    name: "swift-application",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,18 +13,18 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Application Primitives",
-            targets: ["Application Primitives"]
+            name: "Application",
+            targets: ["Application"]
         )
     ],
     targets: [
         .target(
-            name: "Application Primitives"
+            name: "Application"
         ),
         .testTarget(
-            name: "Application Primitives Tests",
+            name: "Application Tests",
             dependencies: [
-                "Application Primitives"
+                "Application"
             ]
         ),
     ],

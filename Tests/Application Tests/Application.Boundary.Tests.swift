@@ -1,4 +1,4 @@
-import Application_Primitives
+import Application
 import Testing
 
 extension Application.Boundary {
