@@ -3,7 +3,7 @@ extension Application {
     @frozen
     public struct Root<Value: Sendable>: Sendable {
 
-        public var state: Application.Root<Value>.State
+        public private(set) var state: Application.Root<Value>.State
 
         public init(state: Application.Root<Value>.State) {
             self.state = state
