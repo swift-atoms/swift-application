@@ -15,17 +15,36 @@ let package = Package(
         .library(
             name: "Application",
             targets: ["Application"]
-        )
+        ),
+        .library(
+            name: "Application Standard Library Integration",
+            targets: ["Application Standard Library Integration"]
+        ),
+        .library(
+            name: "Application Apple Foundation Integration",
+            targets: ["Application Apple Foundation Integration"]
+        ),
     ],
+    dependencies: [],
     targets: [
         .target(
-            name: "Application"
+            name: "Application",
+            dependencies: []
+        ),
+        .target(
+            name: "Application Standard Library Integration",
+            dependencies: ["Application"]
+        ),
+        .target(
+            name: "Application Apple Foundation Integration",
+            dependencies: [
+                "Application",
+                "Application Standard Library Integration",
+            ]
         ),
         .testTarget(
             name: "Application Tests",
-            dependencies: [
-                "Application"
-            ]
+            dependencies: ["Application"]
         ),
     ],
     swiftLanguageModes: [.v6]
