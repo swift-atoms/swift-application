@@ -76,7 +76,7 @@ No versions are tagged yet; pin to `main`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-atoms/swift-application.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-application.git", branch: "main")
 ]
 ```
 
@@ -89,17 +89,17 @@ dependencies: [
 )
 ```
 
+Requires Swift 6.3.3. Platform minimums: macOS 26, iOS 26, tvOS 26, watchOS 26, visionOS 26.
+
+---
+
 ## Architecture
 
-Three library products, with no package dependencies.
+One library product over a single source module, with no package dependencies.
 
 | Product | When to import |
 |---------|----------------|
 | `Application` | Stating an application's composition root, boundary table, or boot shape, in library or application code. |
-| `Application Standard Library Integration` | Using the standard-library integration and compatibility re-export seam. |
-| `Application Apple Foundation Integration` | Using the Apple Foundation integration seam; this is the only product that imports Foundation. |
-
-The core and standard-library integration are Foundation-free and suitable for Embedded-oriented consumers.
 
 Key types in the `Application` namespace:
 
