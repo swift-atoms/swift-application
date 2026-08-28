@@ -1,4 +1,4 @@
-# swift-application-primitives
+# swift-application
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -22,7 +22,7 @@ The application-as-value algebra — a set-once composition root, a total bounda
 An application boots in two phases and then resolves at boundaries. The types carry the ordering, so the sequence cannot be written wrong:
 
 ```swift
-import Application_Primitives
+import Application
 
 struct Resources: Sendable {
     var greeting: String
@@ -76,7 +76,7 @@ No versions are tagged yet; pin to `main`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-application-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-application.git", branch: "main")
 ]
 ```
 
@@ -84,7 +84,7 @@ dependencies: [
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "Application Primitives", package: "swift-application-primitives")
+        .product(name: "Application", package: "swift-application")
     ]
 )
 ```
@@ -99,7 +99,7 @@ One library product over a single source module, with no package dependencies.
 
 | Product | When to import |
 |---------|----------------|
-| `Application Primitives` | Stating an application's composition root, boundary table, or boot shape, in library or application code. |
+| `Application` | Stating an application's composition root, boundary table, or boot shape, in library or application code. |
 
 Key types in the `Application` namespace:
 
