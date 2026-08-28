@@ -76,7 +76,7 @@ No versions are tagged yet; pin to `main`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-application.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-application.git", branch: "main")
 ]
 ```
 

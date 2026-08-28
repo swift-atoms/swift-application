@@ -1,7 +1,7 @@
 # .github/metadata.yaml
 description: "The application-as-value algebra for Swift: a set-once composition root, a total boundary table, and a two-phase boot stated as types."
 topics:
-  - molecules
+  - primitives
   - application
 homepage: "https://swift-institute.org"
 readme:
