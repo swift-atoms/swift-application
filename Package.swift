@@ -12,27 +12,57 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(
-            name: "Application",
-            targets: ["Application"]
-        )
+        .library(name: "Application", targets: ["Application"]),
+        .library(name: "Application Standard Library Integration", targets: ["Application Standard Library Integration"]),
+        .library(name: "Application Foundation Library Integration", targets: ["Application Foundation Library Integration"]),
+        .library(name: "Application Test Support", targets: ["Application Test Support"]),
     ],
+    dependencies: [],
     targets: [
         .target(
-            name: "Application"
+            name: "Application",
+            dependencies: [
+            ],
+            path: "Sources/Application"
+        ),
+        .target(
+            name: "Application Standard Library Integration",
+            dependencies: [
+                .target(name: "Application"),
+            ],
+            path: "Sources/Application Standard Library Integration"
+        ),
+        .target(
+            name: "Application Foundation Library Integration",
+            dependencies: [
+                .target(name: "Application"),
+                .target(name: "Application Standard Library Integration"),
+            ],
+            path: "Sources/Application Foundation Library Integration"
+        ),
+        .target(
+            name: "Application Test Support",
+            dependencies: [
+                .target(name: "Application"),
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "Application Tests",
             dependencies: [
-                .target(name: "Application")
-            ]
+                .target(name: "Application"),
+                .target(name: "Application Test Support"),
+                .target(name: "Application Standard Library Integration"),
+                .target(name: "Application Foundation Library Integration"),
+            ],
+            path: "Tests/Application Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -41,8 +71,4 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }
