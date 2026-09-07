@@ -2,8 +2,8 @@ import Application
 import Testing
 
 @Suite
-struct `Root Tests` {
-    @Suite struct Unit {
+struct `Roots register and resolve application values` {
+    @Suite struct `Registration follows the root state` {
         @Test func `an unset root reports it is not registered`() {
             let root = Application.Root<Int>.unset
 
@@ -51,7 +51,7 @@ struct `Root Tests` {
         }
     }
 
-    @Suite struct `Edge Case` {
+    @Suite struct `Repeated registration preserves the first value` {
         @Test func `a root registering an optional value distinguishes none from unset`() throws {
             var root = Application.Root<Int?>.unset
             try root.register(nil)
@@ -71,7 +71,7 @@ struct `Root Tests` {
         }
     }
 
-    @Suite struct Integration {
+    @Suite struct `Registered roots resolve across boundaries` {
         @Test func `every boundary resolves the same value whatever its disposition`() throws {
             let root = Application.Root<Int>.registered(7)
             var table = Application.Boundary.Table.inherited
@@ -87,12 +87,16 @@ struct `Root Tests` {
             }
         }
 
-        @Test func `resolving at a boundary before registration reports no root`() {
+        @Test(arguments: Application.Boundary.allCases, Application.Boundary.Disposition.allCases)
+        func `resolving at a boundary before registration reports no root`(
+            boundary: Application.Boundary, disposition: Application.Boundary.Disposition
+        ) {
             let root = Application.Root<Int>.unset
 
             #expect(throws: Application.Root<Int>.Error.notRegistered) {
-                try root.resolve(at: .request, using: .inherited)
+                try root.resolve(at: boundary, using: .uniform(disposition))
             }
+            #expect(root.state == .unset)
         }
     }
 }

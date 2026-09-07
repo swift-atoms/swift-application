@@ -2,8 +2,8 @@ import Application
 import Testing
 
 @Suite
-struct `Resolution Tests` {
-    @Suite struct Unit {
+struct `Resolutions record values and boundary metadata` {
+    @Suite struct `Resolution values determine agreement` {
         @Test func `a resolution records the boundary and disposition it was obtained under`() {
             let resolution = Application.Resolution(
                 boundary: .job,
@@ -43,7 +43,7 @@ struct `Resolution Tests` {
         }
     }
 
-    @Suite struct `Edge Case` {
+    @Suite struct `Agreement and record equality have distinct meanings` {
         @Test func `agreement is about the value and equality is about the whole record`() {
             let inherited = Application.Resolution(
                 boundary: .request,
@@ -71,7 +71,7 @@ struct `Resolution Tests` {
         }
     }
 
-    @Suite struct Integration {
+    @Suite struct `One root agrees across all boundaries` {
         @Test func `every pair of boundary resolutions of one registered root agrees`() throws {
             let root = Application.Root<Int>.registered(7)
             var table = Application.Boundary.Table.inherited

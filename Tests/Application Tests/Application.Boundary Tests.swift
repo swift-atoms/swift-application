@@ -2,9 +2,9 @@ import Application
 import Testing
 
 extension Application.Boundary {
-    @Suite("Application.Boundary")
-    struct Test {
-        @Suite struct Unit {
+    @Suite
+    struct `Boundary tables assign resolution dispositions` {
+        @Suite struct `Each boundary has one disposition` {
             @Test func `a uniform table assigns its disposition to every boundary`() {
                 for disposition in Application.Boundary.Disposition.allCases {
                     let table = Application.Boundary.Table.uniform(disposition)
@@ -46,7 +46,7 @@ extension Application.Boundary {
             }
         }
 
-        @Suite struct `Edge Case` {
+        @Suite struct `Boundary partitions remain total` {
             @Test func `a table is total over the boundary vocabulary`() {
 
                 let table = Application.Boundary.Table(
@@ -70,7 +70,5 @@ extension Application.Boundary {
                 #expect(table.boundaries(.reapplied) == Application.Boundary.allCases)
             }
         }
-
-        @Suite struct Integration {}
     }
 }
