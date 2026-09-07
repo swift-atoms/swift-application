@@ -28,5 +28,6 @@ extension Application.Resolution where Value: Equatable {
     }
 }
 
-extension Application.Resolution: Equatable where Value: Equatable {}
-extension Application.Resolution: Hashable where Value: Hashable {}
+extension Application.Resolution: Swift.Equatable where Value: Swift.Equatable {}
+
+extension Application.Resolution: Swift.Hashable where Value: Swift.Hashable {}

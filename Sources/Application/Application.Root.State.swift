@@ -9,5 +9,6 @@ extension Application.Root {
     }
 }
 
-extension Application.Root.State: Equatable where Value: Equatable {}
-extension Application.Root.State: Hashable where Value: Hashable {}
+extension Application.Root.State: Swift.Equatable where Value: Swift.Equatable {}
+
+extension Application.Root.State: Swift.Hashable where Value: Swift.Hashable {}

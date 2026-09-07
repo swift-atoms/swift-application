@@ -56,5 +56,6 @@ extension Application.Root {
     }
 }
 
-extension Application.Root: Equatable where Value: Equatable {}
-extension Application.Root: Hashable where Value: Hashable {}
+extension Application.Root: Swift.Equatable where Value: Swift.Equatable {}
+
+extension Application.Root: Swift.Hashable where Value: Swift.Hashable {}

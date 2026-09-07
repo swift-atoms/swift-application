@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "Application", targets: ["Application"]),
-        .library(name: "Application Standard Library Integration", targets: ["Application Standard Library Integration"]),
-        .library(name: "Application Foundation Library Integration", targets: ["Application Foundation Library Integration"]),
+
+        .library(name: "Application Foundation Integration", targets: ["Application Foundation Integration"]),
         .library(name: "Application Test Support", targets: ["Application Test Support"]),
     ],
     dependencies: [],
@@ -25,20 +25,13 @@ let package = Package(
             ],
             path: "Sources/Application"
         ),
+        
         .target(
-            name: "Application Standard Library Integration",
+            name: "Application Foundation Integration",
             dependencies: [
                 .target(name: "Application"),
             ],
-            path: "Sources/Application Standard Library Integration"
-        ),
-        .target(
-            name: "Application Foundation Library Integration",
-            dependencies: [
-                .target(name: "Application"),
-                .target(name: "Application Standard Library Integration"),
-            ],
-            path: "Sources/Application Foundation Library Integration"
+            path: "Sources/Application Foundation Integration"
         ),
         .target(
             name: "Application Test Support",
@@ -52,8 +45,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Application"),
                 .target(name: "Application Test Support"),
-                .target(name: "Application Standard Library Integration"),
-                .target(name: "Application Foundation Library Integration"),
+                .target(name: "Application Foundation Integration"),
             ],
             path: "Tests/Application Tests"
         ),
