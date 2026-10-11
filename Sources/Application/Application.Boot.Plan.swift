@@ -1,7 +1,7 @@
 extension Application.Boot {
 
     @frozen
-    public struct Plan<Resources: Sendable, Value: Sendable, Failure: Swift.Error>: Sendable {
+    public struct Plan<Resources: Sendable, Value: Sendable, Failure: Swift::Error>: Sendable {
 
         public let construct: @Sendable () throws(Failure) -> Resources
 

@@ -24,7 +24,7 @@ extension Application.Boot {
             var label: String
         }
 
-        enum Failure: Swift.Error, Equatable {
+        enum Failure: Swift::Error, Equatable {
             case unavailable
         }
 

@@ -12,7 +12,7 @@ import Testing
                 != ObjectIdentifier(Application.Root<String>.Error.self)
         )
 
-        let failure: any Swift.Error = Application.Root<Int>.Error.notRegistered
+        let failure: any Swift::Error = Application.Root<Int>.Error.notRegistered
         #expect(failure is Application.Root<Int>.Error)
         #expect(!(failure is Application.Root<String>.Error))
     }
