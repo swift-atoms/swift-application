@@ -21,8 +21,7 @@ import Testing
         let root = Application.Root<`Root errors preserve registration contracts`.Payload>.unset
         let failure = await Task.detached {
             () -> Application.Root<`Root errors preserve registration contracts`.Payload>.Error? in
-            do throws(Application.Root<`Root errors preserve registration contracts`.Payload>.Error)
-            {
+            do throws(Application.Root<`Root errors preserve registration contracts`.Payload>.Error) {
                 _ = try root.resolve()
                 return nil
             } catch {
@@ -31,10 +30,9 @@ import Testing
         }.value
 
         #expect(failure == .notRegistered)
-        let failures:
-            Set<Application.Root<`Root errors preserve registration contracts`.Payload>.Error> = [
-                .notRegistered, .alreadyRegistered, .notRegistered,
-            ]
+        let failures: Set<Application.Root<`Root errors preserve registration contracts`.Payload>.Error> = [
+            .notRegistered, .alreadyRegistered, .notRegistered,
+        ]
         #expect(failures.count == 2)
     }
 
