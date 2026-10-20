@@ -21,7 +21,8 @@ import Testing
         let root = Application.Root<`Root errors preserve registration contracts`.Payload>.unset
         let failure = await Task.detached {
             () -> Application.Root<`Root errors preserve registration contracts`.Payload>.Error? in
-            do throws(Application.Root<`Root errors preserve registration contracts`.Payload>.Error) {
+            do throws(Application.Root<`Root errors preserve registration contracts`.Payload>.Error)
+            {
                 _ = try root.resolve()
                 return nil
             } catch {
@@ -30,15 +31,17 @@ import Testing
         }.value
 
         #expect(failure == .notRegistered)
-        let failures: Set<Application.Root<`Root errors preserve registration contracts`.Payload>.Error> = [
-            .notRegistered, .alreadyRegistered, .notRegistered,
-        ]
+        let failures:
+            Set<Application.Root<`Root errors preserve registration contracts`.Payload>.Error> = [
+                .notRegistered, .alreadyRegistered, .notRegistered,
+            ]
         #expect(failures.count == 2)
     }
 
     @Test(arguments: [nil, 7] as [Int?], [false, true])
     func `A registered nil rejects every subsequent registration`(
-        replacement: Int?, initialized: Bool
+        replacement: Int?,
+        initialized: Bool
     ) throws {
         var root: Application.Root<Int?>
         if initialized {

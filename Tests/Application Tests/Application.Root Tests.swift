@@ -89,7 +89,8 @@ struct `Roots register and resolve application values` {
 
         @Test(arguments: Application.Boundary.allCases, Application.Boundary.Disposition.allCases)
         func `resolving at a boundary before registration reports no root`(
-            boundary: Application.Boundary, disposition: Application.Boundary.Disposition
+            boundary: Application.Boundary,
+            disposition: Application.Boundary.Disposition
         ) {
             let root = Application.Root<Int>.unset
 
