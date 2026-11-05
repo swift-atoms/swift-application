@@ -8,7 +8,6 @@ Use this package when an application composes one root value at startup, registe
 - Resolving an unset root fails, at every boundary and under every disposition, and leaves the root unset.
 - `Application.Root` is a value: copies of an unset root register independently of each other and of the original.
 - Calling an `Application.Boot.Plan` runs `construct` once and then `compose` once on its result, and returns a root that is already registered. Nothing is cached: every call constructs fresh resources. When `construct` throws, its own error reaches the caller, `compose` does not run and no root is produced.
-- `Application.Boot.Phase.construction` comes before `Application.Boot.Phase.registration`.
 - Resolving at a boundary returns the registered value unchanged, whatever disposition the table assigns there. The disposition is only recorded in the `Application.Resolution`; this package does not inherit or reapply anything itself.
 - `Application.Resolution.agrees(with:)` compares values only, so two resolutions of one root agree across boundaries and dispositions; `==` compares the whole record, boundary and disposition included.
 - `Application.Boundary.Table.boundaries(_:)` partitions every `Application.Boundary` between the two dispositions, in `Application.Boundary.allCases` order. Assigning one boundary changes no other.
