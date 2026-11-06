@@ -2,7 +2,7 @@ import Application
 import Synchronization
 import Testing
 
-extension Application.Boot.`Boot constructs and registers application roots`.Tally {
+extension `Application.Boot Tests`.`Boot constructs and registers application roots`.Tally {
     func increment() {
         count.withLock { $0 += 1 }
     }
@@ -12,7 +12,9 @@ extension Application.Boot.`Boot constructs and registers application roots`.Tal
     }
 }
 
-extension Application.Boot {
+enum `Application.Boot Tests` {}
+
+extension `Application.Boot Tests` {
     @Suite
     struct `Boot constructs and registers application roots` {
 
@@ -40,17 +42,17 @@ extension Application.Boot {
 
             @Test func `a plan yields a root already in the registered state`() throws {
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
                     Never
                 >(
                     construct: {
-                        Application.Boot.`Boot constructs and registers application roots`.Resource(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource(
                             label: "production"
                         )
                     },
                     compose: {
-                        Application.Boot.`Boot constructs and registers application roots`.Composed(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed(
                             label: $0.label
                         )
                     }
@@ -62,26 +64,26 @@ extension Application.Boot {
                 #expect(root.isRegistered)
                 #expect(
                     resolved
-                        == Application.Boot.`Boot constructs and registers application roots`
+                        == `Application.Boot Tests`.`Boot constructs and registers application roots`
                         .Composed(label: "production")
                 )
             }
 
             @Test func `a plan runs the construction phase exactly once`() {
-                let tally = Application.Boot.`Boot constructs and registers application roots`
+                let tally = `Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Tally()
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
                     Never
                 >(
                     construct: {
                         tally.increment()
-                        return Application.Boot.`Boot constructs and registers application roots`
+                        return `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Resource(label: "production")
                     },
                     compose: {
-                        Application.Boot.`Boot constructs and registers application roots`.Composed(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed(
                             label: $0.label
                         )
                     }
@@ -93,9 +95,8 @@ extension Application.Boot {
             }
 
             @Test func `composition follows construction exactly once per invocation`() throws {
-                let construction = Application.Boot
-                    .`Boot constructs and registers application roots`.Tally()
-                let composition = Application.Boot.`Boot constructs and registers application roots`
+                let construction = `Application.Boot Tests`.`Boot constructs and registers application roots`.Tally()
+                let composition = `Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Tally()
                 let plan = Application.Boot.Plan<Int, Int, Never>(
                     construct: {
@@ -137,28 +138,28 @@ extension Application.Boot {
 
             @Test func `a failing construction phase raises its own error type`() {
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
-                    Application.Boot.`Boot constructs and registers application roots`.Failure
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Failure
                 >(
 
                     construct: {
-                        () throws(Application.Boot.`Boot constructs and registers application roots`
+                        () throws(`Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Failure)
-                            -> Application.Boot.`Boot constructs and registers application roots`
+                            -> `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Resource in
-                        throw Application.Boot.`Boot constructs and registers application roots`
+                        throw `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Failure.unavailable
                     },
                     compose: {
-                        Application.Boot.`Boot constructs and registers application roots`.Composed(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed(
                             label: $0.label
                         )
                     }
                 )
 
                 #expect(
-                    throws: Application.Boot.`Boot constructs and registers application roots`
+                    throws: `Application.Boot Tests`.`Boot constructs and registers application roots`
                         .Failure.unavailable
                 ) {
                     try plan()
@@ -168,29 +169,29 @@ extension Application.Boot {
 
         @Suite struct `Construction failure and repeated execution preserve phase boundaries` {
             @Test func `a failed construction registers nothing`() {
-                let tally = Application.Boot.`Boot constructs and registers application roots`
+                let tally = `Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Tally()
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
-                    Application.Boot.`Boot constructs and registers application roots`.Failure
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Failure
                 >(
                     construct: {
-                        () throws(Application.Boot.`Boot constructs and registers application roots`
+                        () throws(`Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Failure)
-                            -> Application.Boot.`Boot constructs and registers application roots`
+                            -> `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Resource in
-                        throw Application.Boot.`Boot constructs and registers application roots`
+                        throw `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Failure.unavailable
                     },
                     compose: {
                         tally.increment()
-                        return Application.Boot.`Boot constructs and registers application roots`
+                        return `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Composed(label: $0.label)
                     }
                 )
 
-                do throws(Application.Boot.`Boot constructs and registers application roots`
+                do throws(`Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Failure)
                 {
                     _ = try plan()
@@ -200,20 +201,20 @@ extension Application.Boot {
             }
 
             @Test func `each run of a plan constructs its own resources`() {
-                let tally = Application.Boot.`Boot constructs and registers application roots`
+                let tally = `Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Tally()
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
                     Never
                 >(
                     construct: {
                         tally.increment()
-                        return Application.Boot.`Boot constructs and registers application roots`
+                        return `Application.Boot Tests`.`Boot constructs and registers application roots`
                             .Resource(label: "production")
                     },
                     compose: {
-                        Application.Boot.`Boot constructs and registers application roots`.Composed(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed(
                             label: $0.label
                         )
                     }
@@ -229,17 +230,17 @@ extension Application.Boot {
         @Suite struct `Booted roots resolve through boundaries` {
             @Test func `a booted root resolves at every boundary`() throws {
                 let plan = Application.Boot.Plan<
-                    Application.Boot.`Boot constructs and registers application roots`.Resource,
-                    Application.Boot.`Boot constructs and registers application roots`.Composed,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource,
+                    `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed,
                     Never
                 >(
                     construct: {
-                        Application.Boot.`Boot constructs and registers application roots`.Resource(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Resource(
                             label: "production"
                         )
                     },
                     compose: {
-                        Application.Boot.`Boot constructs and registers application roots`.Composed(
+                        `Application.Boot Tests`.`Boot constructs and registers application roots`.Composed(
                             label: $0.label
                         )
                     }
@@ -247,7 +248,7 @@ extension Application.Boot {
 
                 let root = plan()
                 let table = Application.Boundary.Table.reapplied
-                let expected = Application.Boot.`Boot constructs and registers application roots`
+                let expected = `Application.Boot Tests`.`Boot constructs and registers application roots`
                     .Composed(label: "production")
 
                 for boundary in Application.Boundary.allCases {

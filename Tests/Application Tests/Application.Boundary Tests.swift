@@ -1,7 +1,9 @@
 import Application
 import Testing
 
-extension Application.Boundary {
+enum `Application.Boundary Tests` {}
+
+extension `Application.Boundary Tests` {
     @Suite
     struct `Boundary tables assign resolution dispositions` {
         @Suite struct `Each boundary has one disposition` {
