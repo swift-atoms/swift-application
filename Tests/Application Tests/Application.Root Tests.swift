@@ -1,8 +1,15 @@
 import Application
 import Testing
 
-@Suite
-struct `Roots register and resolve application values` {
+enum `Application.Root Tests` {}
+
+extension `Application.Root Tests` {
+    @Suite
+    struct `Roots register and resolve application values` {
+    }
+}
+
+extension `Application.Root Tests`.`Roots register and resolve application values` {
     @Suite struct `Registration follows the root state` {
         @Test func `an unset root reports it is not registered`() {
             let root = Application.Root<Int>.unset

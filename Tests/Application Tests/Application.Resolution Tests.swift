@@ -1,8 +1,15 @@
 import Application
 import Testing
 
-@Suite
-struct `Resolutions record values and boundary metadata` {
+enum `Application.Resolution Tests` {}
+
+extension `Application.Resolution Tests` {
+    @Suite
+    struct `Resolutions record values and boundary metadata` {
+    }
+}
+
+extension `Application.Resolution Tests`.`Resolutions record values and boundary metadata` {
     @Suite struct `Resolution values determine agreement` {
         @Test func `a resolution records the boundary and disposition it was obtained under`() {
             let resolution = Application.Resolution(

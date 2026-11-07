@@ -6,71 +6,74 @@ enum `Application.Boundary Tests` {}
 extension `Application.Boundary Tests` {
     @Suite
     struct `Boundary tables assign resolution dispositions` {
-        @Suite struct `Each boundary has one disposition` {
-            @Test func `a uniform table assigns its disposition to every boundary`() {
-                for disposition in Application.Boundary.Disposition.allCases {
-                    let table = Application.Boundary.Table.uniform(disposition)
+    }
+}
 
-                    for boundary in Application.Boundary.allCases {
-                        #expect(table[boundary] == disposition)
-                    }
+extension `Application.Boundary Tests`.`Boundary tables assign resolution dispositions` {
+    @Suite struct `Each boundary has one disposition` {
+        @Test func `a uniform table assigns its disposition to every boundary`() {
+            for disposition in Application.Boundary.Disposition.allCases {
+                let table = Application.Boundary.Table.uniform(disposition)
+
+                for boundary in Application.Boundary.allCases {
+                    #expect(table[boundary] == disposition)
                 }
-            }
-
-            @Test func `the presets are the uniform tables`() {
-                #expect(Application.Boundary.Table.inherited == .uniform(.inherited))
-                #expect(Application.Boundary.Table.reapplied == .uniform(.reapplied))
-            }
-
-            @Test func `assigning a boundary changes that boundary and no other`() {
-                for assigned in Application.Boundary.allCases {
-                    var table = Application.Boundary.Table.inherited
-                    table[assigned] = .reapplied
-
-                    for boundary in Application.Boundary.allCases {
-                        let expected: Application.Boundary.Disposition =
-                            boundary == assigned ? .reapplied : .inherited
-                        #expect(table[boundary] == expected)
-                    }
-                }
-            }
-
-            @Test func `the dispositions partition every boundary`() {
-                var table = Application.Boundary.Table.inherited
-                table[.job] = .reapplied
-
-                let inherited = table.boundaries(.inherited)
-                let reapplied = table.boundaries(.reapplied)
-
-                #expect(reapplied == [.job])
-                #expect(inherited.count + reapplied.count == Application.Boundary.allCases.count)
-                #expect(!inherited.contains(.job))
             }
         }
 
-        @Suite struct `Boundary partitions remain total` {
-            @Test func `a table is total over the boundary vocabulary`() {
+        @Test func `the presets are the uniform tables`() {
+            #expect(Application.Boundary.Table.inherited == .uniform(.inherited))
+            #expect(Application.Boundary.Table.reapplied == .uniform(.reapplied))
+        }
 
-                let table = Application.Boundary.Table(
-                    request: .inherited,
-                    scene: .inherited,
-                    task: .reapplied,
-                    job: .reapplied,
-                    shutdown: .inherited
-                )
+        @Test func `assigning a boundary changes that boundary and no other`() {
+            for assigned in Application.Boundary.allCases {
+                var table = Application.Boundary.Table.inherited
+                table[assigned] = .reapplied
 
-                #expect(Application.Boundary.allCases.count == 5)
-                #expect(
-                    table.boundaries(.inherited).count + table.boundaries(.reapplied).count == 5
-                )
+                for boundary in Application.Boundary.allCases {
+                    let expected: Application.Boundary.Disposition =
+                        boundary == assigned ? .reapplied : .inherited
+                    #expect(table[boundary] == expected)
+                }
             }
+        }
 
-            @Test func `a table assigning every boundary the same way has one partition`() {
-                let table = Application.Boundary.Table.reapplied
+        @Test func `the dispositions partition every boundary`() {
+            var table = Application.Boundary.Table.inherited
+            table[.job] = .reapplied
 
-                #expect(table.boundaries(.inherited).isEmpty)
-                #expect(table.boundaries(.reapplied) == Application.Boundary.allCases)
-            }
+            let inherited = table.boundaries(.inherited)
+            let reapplied = table.boundaries(.reapplied)
+
+            #expect(reapplied == [.job])
+            #expect(inherited.count + reapplied.count == Application.Boundary.allCases.count)
+            #expect(!inherited.contains(.job))
+        }
+    }
+
+    @Suite struct `Boundary partitions remain total` {
+        @Test func `a table is total over the boundary vocabulary`() {
+
+            let table = Application.Boundary.Table(
+                request: .inherited,
+                scene: .inherited,
+                task: .reapplied,
+                job: .reapplied,
+                shutdown: .inherited
+            )
+
+            #expect(Application.Boundary.allCases.count == 5)
+            #expect(
+                table.boundaries(.inherited).count + table.boundaries(.reapplied).count == 5
+            )
+        }
+
+        @Test func `a table assigning every boundary the same way has one partition`() {
+            let table = Application.Boundary.Table.reapplied
+
+            #expect(table.boundaries(.inherited).isEmpty)
+            #expect(table.boundaries(.reapplied) == Application.Boundary.allCases)
         }
     }
 }
